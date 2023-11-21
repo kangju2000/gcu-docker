@@ -106,12 +106,12 @@ const initializeCreateCakeState = (initialCake: Cake) => ({
 });
 
 export const getServerSideProps = async ({ query, req }: GetServerSidePropsContext) => {
-  const cake = await axios.get<Cake>('/api/cake/' + query.id).then(res => res.data);
+  const { data } = await axios.get<Cake>('http://172.20.0.5:5000/api/cake/5');
 
   return {
     props: {
-      initialCake: cake,
-      kakaoShareData: getClipData(cake),
+      initialCake: data,
+      kakaoShareData: getClipData(data),
     },
   };
 };

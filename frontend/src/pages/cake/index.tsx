@@ -48,7 +48,7 @@ type CreateCakeInputs = {
 
 const addCake = async (values: CreateCakeInputs) => {
   try {
-    const { data } = await axios.post<Cake>('/api/cake', {
+    const { data } = await axios.post<{ value: Cake }>('/api/cake', {
       data: values,
     });
 
@@ -66,14 +66,15 @@ const Cake = () => {
 
   const handleConfirm = async () => {
     const params = serializeObjectForServer({ ...steps });
-    const cake = await addCake(params);
+    const data = await addCake(params);
 
     setIsModalOpen(false);
     setShowGift(true);
 
-    if (!cake) return;
+    if (!data) return alert('에러가 발생했습니다!');
+
     setTimeout(() => {
-      router.push(`/cake/complete/${cake.cakeId}`);
+      router.push(`/cake/complete/${data.value}`);
     }, 3000);
   };
 

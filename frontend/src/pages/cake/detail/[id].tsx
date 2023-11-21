@@ -72,7 +72,7 @@ export default function SharePage({ initialCake, kakaoShareData }: Props) {
 }
 
 export const getServerSideProps = async ({ query, req }: GetServerSidePropsContext) => {
-  const cake = await axios.get<Cake>('/api/cake/' + query.id).then(res => res.data);
+  const cake = await axios.get<Cake>('http://172.20.0.5/api/cake/' + query.id).then(res => res.data);
   if (!cake) {
     return {
       redirect: '/',
@@ -105,12 +105,10 @@ const initializeCreateCakeState = (initialCake: Cake) => ({
   },
 });
 
-const GITHUB_REPO_PATH = 'https://github.com/Sprint15th/chu_card-client/blob/develop/public/images';
-
 const getClipData = (cake: Cake) => ({
   title: `${cake.sender}님께서 ${cake.receiver}에게 축하메시지를 보냈습니다.`,
   description: cake.message,
-  image: `${GITHUB_REPO_PATH}/${CAKE_PATH[`${cake.shape}_${cake.topping}`]}.png?raw=true`,
+  image: `/images/${CAKE_PATH[`${cake.shape}_${cake.topping}`]}.png?raw=true`,
   APIKEY: process.env.NEXT_PUBLIC_KAKAO_API_KEY,
 });
 export const GiftRoot = styled.div`
