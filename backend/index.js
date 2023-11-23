@@ -1,9 +1,7 @@
 const express = require('express');
 const db = require('./db');
-const winston = require('winston');
 
 const app = express();
-const logger = winston.createLogger();
 
 app.use(express.json());
 
@@ -19,7 +17,6 @@ app.post('/api/cake', (req, res, next) => {
 
 
   db.pool.query(`INSERT INTO cake (color, shape, topping, sender, receiver, message) VALUES ('${color}', '${shape}', '${topping}', '${sender}', '${receiver}', '${message}');`, (err, results, fields) => {
-    logger.info(results);
     if (err) return res.status(500).send(err);
     else return res.json({ success: true, value: results.insertId });
   });

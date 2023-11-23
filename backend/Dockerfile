@@ -6,5 +6,4 @@ RUN npm install
 
 COPY ./ ./
 
-#nodemon 사용 
 CMD ["npm", "run", "start"]
